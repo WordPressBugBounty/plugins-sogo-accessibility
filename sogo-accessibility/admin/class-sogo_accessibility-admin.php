@@ -98,6 +98,11 @@ class Sogo_accessibility_Admin {
 
 		wp_enqueue_script( $this->sogo_accessibility, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 
+		wp_localize_script( $this->sogo_accessibility, 'sogoAccAdmin', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'sogo_accessibility_check_license' ),
+		) );
+
 	}
 
 	

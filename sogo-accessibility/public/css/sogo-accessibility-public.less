@@ -365,14 +365,17 @@ div#sogo_overlay {
   //}
 
 
-  body.sogo_blank_white {
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    -webkit-filter: grayscale(1);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    filter: gray;
+  body.sogo_blank_white::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    mix-blend-mode: saturation;
+    pointer-events: none;
+    z-index: 9999998;
   }
 
   //body.sogo_a1,

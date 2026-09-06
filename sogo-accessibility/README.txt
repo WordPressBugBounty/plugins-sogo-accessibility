@@ -2,9 +2,10 @@
 Contributors: orenhav
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z5H7VVZLSPYUE
 Tags: accessibility
-Requires at least: 3.0.1
-Tested up to: 5.3
-Stable tag: 2.1
+Requires at least: 4.6
+Tested up to: 7.1
+Requires PHP: 5.6
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +34,17 @@ The admin can select:
 ### new: added support for hide accessibility in mobile and tablet ###
 
 now you can hide the accessibility on mobile and tablet
+
+### Activation notice and external services ###
+
+When you activate the plugin it asks, once, whether you would like to let SOGO know.
+If you choose "Notify SOGO" an e-mail containing your site address and administrator
+e-mail address is sent to wpmaster@sogo.co.il. If you choose "No thanks" nothing is
+sent. The plugin behaves identically either way.
+
+The front-end toolbar loads the Font Awesome icon font from the BootstrapCDN
+(maxcdn.bootstrapcdn.com). The premium license field, when used, contacts
+pluginsmarket.com to validate the licence key you enter.
 
 ### Missing something? need help? ###
 if you need help configure the plugin or need help customize it to your site
@@ -75,6 +87,17 @@ yes you can, simply browse to the plugin settings and disable features you don't
 
 == Changelog ==
 
+= 2.2 =
+* Fix: black & white mode now uses a blend-mode overlay instead of a CSS filter on the page body, which broke fixed-position elements such as sticky headers.
+* Fix: "cancel accessibility" now clears the plugin cookies properly.
+* Fix: the enqueued CSS and JS now carry the real plugin version, so browsers pick up updated assets after an upgrade.
+* Fix: replaced the jQuery `.load()` event shorthand removed in jQuery 3, which stopped the automatic image alt fallback and the admin licence check from running.
+* Fix: the "hide on mobile / tablet" media queries were never closed and swallowed the button colour settings.
+* Fix: the two larger font-size buttons emitted broken markup instead of an aria-label.
+* Privacy: the activation notification to SOGO is now opt-in. Nothing is sent unless an administrator agrees on the activation notice.
+* Security: the licence check now requires a nonce and the manage_options capability, and verifies TLS certificates.
+* Compatibility: fixed PHP 8 warnings and deprecations; tested against WordPress 7.1.
+
 = 1.0 =
 First version
 
@@ -107,3 +130,8 @@ fix icons
 
 = 2.1 =
 add  Polish language support
+
+== Upgrade Notice ==
+
+= 2.2 =
+Compatibility and security release for current WordPress and PHP 8. Fixes black & white mode, restores features broken by jQuery 3, and makes the activation notification to SOGO opt-in.

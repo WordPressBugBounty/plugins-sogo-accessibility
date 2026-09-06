@@ -58,6 +58,17 @@ class Sogo_accessibility {
 	protected $version;
 
 	/**
+	 * Whether a valid premium license is active.
+	 *
+	 * Declared explicitly because PHP 8.2 deprecates dynamic properties.
+	 *
+	 * @since    2.2
+	 * @access   protected
+	 * @var      bool    $premuim
+	 */
+	protected $premuim;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -69,7 +80,7 @@ class Sogo_accessibility {
 	public function __construct() {
 
 		$this->sogo_accessibility = 'sogo_accessibility';
-		$this->version = '1.0.5';
+		$this->version = SOGO_ACCESSIBILITY_VERSION;
 		$this->premuim = get_option('_sogo_acc_lk_status') =='valid';
 		$this->load_dependencies();
 		$this->set_locale();
@@ -178,6 +189,11 @@ class Sogo_accessibility {
 		$this->loader->add_action( 'admin_init' , $plugin_settings, 'register_settings' );
 		$this->loader->add_action( 'admin_init' , $plugin_settings, 'sogo_activate_license' );
 		$this->loader->add_action( 'wp_ajax_check_license' , $plugin_settings, 'check_license' );
+
+		// Activation notification consent prompt.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-activator.php';
+		$this->loader->add_action( 'admin_notices', 'Sogo_accessibility_Activator', 'activation_notice' );
+		$this->loader->add_action( 'admin_init', 'Sogo_accessibility_Activator', 'handle_activation_notice' );
 
 		$plugin_meta_box = new sogo_accessibility_Meta_Box( $this->get_sogo_accessibility() );
 		$this->loader->add_action( 'load-toplevel_page_' . $this->get_sogo_accessibility() , $plugin_meta_box, 'add_meta_boxes' );

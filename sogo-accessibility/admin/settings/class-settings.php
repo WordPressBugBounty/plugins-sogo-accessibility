@@ -79,6 +79,16 @@ class sogo_accessibility_Settings {
 	public function sogo_activate_license() {
 
 		if( isset( $_POST['sogo_accessibility_settings']['license_key'] ) ) {
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			// The settings form carries the Settings API nonce.
+			if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['_wpnonce'] ) ), 'sogo_accessibility_settings-options' ) ) {
+				return;
+			}
+
 			$license = trim(sogo_accessibility_Option::get_option('license_key'));
 
 			$api_params = array(
@@ -94,7 +104,6 @@ class sogo_accessibility_Settings {
 			$response = wp_remote_post( EDD_SOGO_ACC_STORE_URL,
 				array(
 					'timeout' => 15,
-					'sslverify' => false,
 					'body' => $api_params
 				) );
 			// make sure the response came back okay
@@ -103,8 +112,12 @@ class sogo_accessibility_Settings {
 
 			// decode the license data
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-			//debug($license_data);
+
 			// $license_data->license will be either "valid" or "invalid"
+			if ( ! isset( $license_data->license ) ) {
+				return false;
+			}
+
 			update_option('_sogo_acc_lk_status',$license_data->license);
 		}
 	}
@@ -113,6 +126,12 @@ class sogo_accessibility_Settings {
 	public function check_license() {
 
 		global $wp_version;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( '', '', array( 'response' => 403 ) );
+		}
+
+		check_ajax_referer( 'sogo_accessibility_check_license', 'nonce' );
 
 		$license = trim(sogo_accessibility_Option::get_option('license_key'));
 
@@ -126,7 +145,6 @@ class sogo_accessibility_Settings {
 			array(
 			
 				'timeout' => 15,
-				'sslverify' => false,
 				'body' => $api_params
 			) );
 
@@ -134,6 +152,11 @@ class sogo_accessibility_Settings {
 			return false;
 
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( ! isset( $license_data->license ) ) {
+			return false;
+		}
+
 		update_option('_sogo_acc_lk_status',$license_data->license);
 		if( $license_data->license == 'valid' ) {
 			echo '<span class="dashicons dashicons-yes" style="color:green"></span>'; exit;

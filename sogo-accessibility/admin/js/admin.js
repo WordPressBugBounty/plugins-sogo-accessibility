@@ -16,7 +16,7 @@
      *
      * Or when the window is loaded:
      *
-     * $( window ).load(function() {
+     * $( window ).on( 'load', function() {
 	 *
 	 * });
      *
@@ -27,15 +27,22 @@
      * be doing this, we should try to minimize doing that in our own work.
      */
 
-    $( window ).load(function() {
+    $( window ).on( 'load', function() {
+        var $field = $('#sogo_accessibility_settings\\[license_key\\]');
+
+        if ( ! $field.length || typeof sogoAccAdmin === 'undefined' ) {
+            return;
+        }
+
         $.ajax({
             type: "POST",
-            url: ajaxurl,
+            url: sogoAccAdmin.ajaxurl,
             data: {
                 'action': 'check_license',
+                'nonce': sogoAccAdmin.nonce
             },
             success: function (response) {
-                 $(response).insertAfter($('#sogo_accessibility_settings\\[license_key\\]'));
+                 $(response).insertAfter($field);
             }
         });
 

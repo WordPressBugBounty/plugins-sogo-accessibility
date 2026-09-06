@@ -74,8 +74,13 @@ class sogo_accessibility_Sanitization_Helper {
 			return $input;
 		}
 
-		parse_str( $_POST['_wp_http_referer'], $referrer );
+		parse_str( wp_unslash( $_POST['_wp_http_referer'] ), $referrer );
 		$tab = isset( $referrer['tab'] ) ? $referrer['tab'] : sogo_accessibility_Settings_Definition::get_default_tab_slug();
+
+		// Fall back to the default tab if the referer named one we do not register.
+		if ( ! isset( $this->registered_settings[ $tab ] ) ) {
+			$tab = sogo_accessibility_Settings_Definition::get_default_tab_slug();
+		}
 
 		// Tab filter
 		$input = apply_filters( 'sogo_accessibility_settings_sanitize_' . $tab, $input );

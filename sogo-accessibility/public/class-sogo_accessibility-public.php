@@ -59,7 +59,9 @@ class Sogo_accessibility_Public {
 
 	function modify_nav_menu_args( $args ) {
 
-		$args['menu_class'] .= ' accessibility_menu';
+		$menu_class = isset( $args['menu_class'] ) ? (string) $args['menu_class'] : '';
+
+		$args['menu_class'] = $menu_class . ' accessibility_menu';
 
 
 		return $args;

@@ -206,7 +206,7 @@
 
 
     });
-    $(window).load(function(){
+    $(window).on('load', function(){
         // set image alt
         $("img").each(function () {
             var img = $(this);
@@ -263,7 +263,7 @@ function eraseSogoCookie( ) {
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        if(c.indexOf('sogo') > 0){
+        if(c.indexOf('sogo') >= 0){
             var e = c.indexOf('=');
             eraseCookie(c.substring(0,e));
         }
@@ -271,6 +271,5 @@ function eraseSogoCookie( ) {
     return null;
 }
 function eraseCookie(name) {
-    // createCookie(name, "", -1);
-    createCookie(name, "");
+    createCookie(name, "", -1);
 }

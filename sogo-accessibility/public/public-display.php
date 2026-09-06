@@ -37,6 +37,7 @@ if ( $icon != 'none' ) {
         #open_sogoacc {
             display: none !important
         }
+    }
 
     <?php
     }elseif($hide_on == 3){
@@ -45,6 +46,7 @@ if ( $icon != 'none' ) {
             #open_sogoacc {
                 display: none !important
             }
+        }
 
         <?php
         }
@@ -92,10 +94,10 @@ echo sogo_accessibility_Option::get_option('extra_css');
 <button id="open_sogoacc"
    aria-label="<?php echo esc_attr( __( 'Press "Alt + A" to open\close the accessibility menu', 'sogoacc' ) ) ?>"
    tabindex="1"
-   accesskey="a" class="<?php echo $location ?> toggle_sogoacc"><?php echo $open_text ?></button>
-<div id="sogoacc" class="<?php echo $location ?>">
+   accesskey="a" class="<?php echo esc_attr( $location ) ?> toggle_sogoacc"><?php echo $open_text ?></button>
+<div id="sogoacc" class="<?php echo esc_attr( $location ) ?>">
     <div id="close_sogoacc"
-         class="toggle_sogoacc"><?php echo $close_text ?></div>
+         class="toggle_sogoacc"><?php echo esc_html( $close_text ) ?></div>
     <div class="sogo-btn-toolbar" role="toolbar">
         <div class="sogo-btn-group">
 			<?php $btns = sogo_accessibility_Option::get_option( 'buttons' ); ?>
@@ -138,11 +140,11 @@ echo sogo_accessibility_Option::get_option('extra_css');
         </div>
         <div id="sogo_font_a" class="sogo-btn-group clearfix">
             <button id="sogo_a1" data-size="1" type="button"
-                    class="btn btn-default " aria-label="<?php echo esc_attr(__("Press to increase font size","sogacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
-            <button id="sogo_a2" data-size="<?php echo sogo_accessibility_Option::get_option( 'a2' ); ?>" type="button"
-                    class="btn btn-default" <?php echo esc_attr(__("Press to increase font size","sogacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
-            <button id="sogo_a3" data-size="<?php echo sogo_accessibility_Option::get_option( 'a3' ); ?>" type="button"
-                    class="btn btn-default" <?php echo esc_attr(__("Press to increase font size","sogacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
+                    class="btn btn-default " aria-label="<?php echo esc_attr(__("Press to increase font size","sogoacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
+            <button id="sogo_a2" data-size="<?php echo esc_attr( sogo_accessibility_Option::get_option( 'a2' ) ); ?>" type="button"
+                    class="btn btn-default" aria-label="<?php echo esc_attr(__("Press to increase font size","sogoacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
+            <button id="sogo_a3" data-size="<?php echo esc_attr( sogo_accessibility_Option::get_option( 'a3' ) ); ?>" type="button"
+                    class="btn btn-default" aria-label="<?php echo esc_attr(__("Press to increase font size","sogoacc"))?>"><?php _e( 'A', 'sogoacc' ) ?></button>
         </div>
         <div class="accessibility-info">
 
@@ -192,8 +194,8 @@ echo sogo_accessibility_Option::get_option('extra_css');
             <div class="sogo-logo">
                 <a target="_blank" href="<?php echo esc_url( sogo_accessibility_Option::get_option( 'logo_url' ) ) ?>"
                    title="<?php echo esc_attr( sogo_accessibility_Option::get_option( 'logo_text' ) ) ?>">
-                    <span><?php echo sogo_accessibility_Option::get_option( 'logo_text' ) ?></span>
-                    <img src="<?php echo esc_attr( sogo_accessibility_Option::get_option( 'logo' ) ) ?>" alt=" logo"/>
+                    <span><?php echo esc_html( sogo_accessibility_Option::get_option( 'logo_text' ) ) ?></span>
+                    <img src="<?php echo esc_url( sogo_accessibility_Option::get_option( 'logo' ) ) ?>" alt=" logo"/>
 
                 </a>
             </div>

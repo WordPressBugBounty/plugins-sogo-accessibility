@@ -12,19 +12,27 @@
  * Plugin Name:       SOGO  Accessibility
  * Plugin URI:        http://sogo.co.il
  * Description:       ALLOW PEOPLE WITH DISABILITIES TO ENJOY THE SAME THINGS THAT PEOPLE WITHOUT DISABILITIES MAKE
- * Version:           2.1
+ * Version:           2.2
  * Author:            Sogo
  * Author URI:        http://sogo.co.il
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       sogoacc
  * Domain Path:       /languages
+ * Requires at least: 4.6
+ * Requires PHP:      5.6
  */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+/**
+ * Current plugin version. Keep in sync with the Version header above and with
+ * the Stable tag in README.txt. Used to cache-bust the enqueued CSS and JS.
+ */
+define( 'SOGO_ACCESSIBILITY_VERSION', '2.2' );
 
 /**
  * The code that runs during plugin activation.
